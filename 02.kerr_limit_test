@@ -46,6 +46,19 @@ print("Schwarzschild limit passes:",
 print("Rotation changes the result:",
       not np.allclose(rotating, schwarzschild))
 
+# Test the equatorial limit at a fixed radius.
+equatorial_cos_theta = np.cos(np.pi / 2)
+
+equatorial_values = [
+    kerr_curvature(3.0, spin, equatorial_cos_theta)
+    for spin in [0.0, 0.5, 0.9]
+]
+
+print(
+    "Equatorial curvature is independent of spin:",
+    np.allclose(equatorial_values, equatorial_values[0])
+)
+
 print("Maximum difference for rotating case:",
       np.max(np.abs(rotating - schwarzschild)))
 
@@ -64,6 +77,55 @@ for spin in [0.0, 0.5, 0.9]:
 for spin in [0.0, 0.5, 0.9]:
     values = kerr_curvature(x, spin, cos_theta)
     plt.plot(x, values, label=f"a* = {spin}")
+
+
+# Independently check one point using the formula directly.
+x_check = 3.0
+spin_check = 0.5
+cos_check = np.cos(np.pi / 3)
+
+numerator_check = (
+    x_check**6
+    - 15 * spin_check**2 * x_check**4 * cos_check**2
+    + 15 * spin_check**4 * x_check**2 * cos_check**4
+    - spin_check**6 * cos_check**6
+)
+
+denominator_check = (
+    x_check**2 + spin_check**2 * cos_check**2
+)**6
+
+manual_value = 48 * numerator_check / denominator_check
+
+function_value = kerr_curvature(
+    x_check, spin_check, cos_check
+)
+
+print(
+    "Direct formula check passes:",
+    np.isclose(manual_value, function_value)
+)    
+
+
+# Check numerical safety across the radial grid.
+for spin in [0.0, 0.5, 0.9]:
+    values = kerr_curvature(x, spin, cos_theta)
+
+    print(
+        f"Spin a* = {spin:.1f}: all values finite:",
+        np.all(np.isfinite(values))
+    )
+
+    denominator = (
+        x**2 + spin**2 * cos_theta**2
+    )**6
+
+    print(
+        f"Spin a* = {spin:.1f}: denominator positive:",
+        np.all(denominator > 0)
+    )
+
+
 
 plt.xlabel("Dimensionless radius, r/M")
 plt.ylabel("Dimensionless Kretschmann scalar, M^4 K")
