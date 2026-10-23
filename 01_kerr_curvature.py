@@ -3,21 +3,16 @@
 File: 01_kerr_curvature.py
 
 Purpose:
-Calculate and plot the dimensionless Kretschmann scalar
-for Kerr spacetime at the equatorial plane.
+Calculate and plot the dimensionless Kretschmann scalar for Kerr spacetime at the equatorial plane.
 
 Method:
-Use the dimensionless radius x = r/M and spin parameter
-a_star = a/M to evaluate the analytical Kerr expression.
+Use the dimensionless radius x = r/M and spin parameter a_star = a/M to evaluate the analytical Kerr expression.
 
 Scope:
-This script explores how the curvature invariant varies
-with radial distance at a fixed polar angle.
+This script explores how the curvature invariant varies with radial distance at a fixed polar angle.
 
 Limitation:
-At the equator, cos(theta) = 0, so the spin-dependent
-terms in this invariant vanish. This plot alone therefore
-does not show the effect of spin on the curvature invariant.
+At the equator, cos(theta) = 0, so the spin-dependent terms in this invariant vanish. This plot alone therefore does not show the effect of spin on the curvature invariant.
 """
 
 
