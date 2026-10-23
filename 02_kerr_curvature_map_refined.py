@@ -26,7 +26,7 @@ c_schw = (0.0 * np.cos(TH))**2
 K_schw_test = 48 * (R**6 - 15 * R**4 * c_schw + 15 * R**2 * c_schw**2 - c_schw**3) / (R**2 + c_schw)**6
 
 assert np.allclose(K_schw_test, 48 / R**6)
-assert np.allclose(48*(R**6)/(R**2 + c)**6, K_schw)
+assert np.allclose(48*(R**6)/(R**2 + c_schw)**6, K_schw)
 
 print(f"r_plus = {r_plus:.4f}")
 print(f"K range: {K.min():.4f} to {K.max():.4f}")
